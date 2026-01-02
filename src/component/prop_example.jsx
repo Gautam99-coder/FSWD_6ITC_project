@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./proptest.css";
 class PropExample extends Component{
     render(){
+        
         return(
             <>
             <div className='user-card'>
