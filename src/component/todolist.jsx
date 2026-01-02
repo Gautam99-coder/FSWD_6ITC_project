@@ -27,6 +27,11 @@ class TodoList extends Component {
         inputvalue: ""
     }));
 };
+    deleteTask=(id)=>{
+        this.setState((prevState)=>({
+            todos:prevState.todos.filter((y)=>y.id!=id),
+        }))
+    }
 
     render() {
     const { todos, inputvalue } = this.state;
@@ -38,14 +43,16 @@ class TodoList extends Component {
             value={inputvalue}
             onChange={this.onInputChange}
         />
-        <br />
-
+        <br/>
         <button onClick={this.addTodoList}>Add</button>
         <br />
-
         <ul>
             {todos.map((todo) => (
-            <li key={todo.id}>{todo.text}</li>
+            <li key={todo.id}>
+                <input type="Checkbox" value={todo.completed} />
+                {todo.text}
+                <button onClick={()=> this.deleteTask(todo.id)}>Delete</button>
+            </li>
             ))}
         </ul>
         </>
