@@ -13,7 +13,6 @@ class UserCard1 extends Component {
                 <h3 className="user-name">Marry Crishmis</h3>
                 <button className="save-button">save</button>
             </div>
-            
             </>
         );
     }
