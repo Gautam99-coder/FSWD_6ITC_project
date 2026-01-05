@@ -8,8 +8,9 @@ class ContactNote extends Component {
       lastname: "",
       phone: "",
       contacts: [],
-      message: "",           // popup message
-      showContactId: null    // track which contact is visible
+      message: "",
+      messageType: "",       // success | error
+      showContactId: null
     };
   }
 
@@ -23,7 +24,16 @@ class ContactNote extends Component {
     const { name, lastname, phone } = this.state;
 
     if (name.trim() === "" || lastname.trim() === "" || phone.trim() === "") {
-      return {message};
+      this.setState({
+        message: "❌ All fields are required!",
+        messageType: "error"
+      });
+
+      setTimeout(() => {
+        this.setState({ message: "" });
+      }, 2000);
+
+      return;
     }
 
     const newContact = {
@@ -38,10 +48,10 @@ class ContactNote extends Component {
       name: "",
       lastname: "",
       phone: "",
-      message: "✅ Contact added successfully!"
+      message: "✅ Contact added successfully!",
+      messageType: "success"
     }));
 
-    // hide message after 2 seconds
     setTimeout(() => {
       this.setState({ message: "" });
     }, 2000);
@@ -61,14 +71,27 @@ class ContactNote extends Component {
   };
 
   render() {
-    const { name, lastname, phone, contacts, message, showContactId } = this.state;
+    const {
+      name,
+      lastname,
+      phone,
+      contacts,
+      message,
+      messageType,
+      showContactId
+    } = this.state;
 
     return (
       <div style={{ width: "400px", margin: "auto" }}>
         <h2>📒 Contact Book</h2>
 
         {message && (
-          <p style={{ color: "green", fontWeight: "bold" }}>
+          <p
+            style={{
+              color: messageType === "error" ? "red" : "green",
+              fontWeight: "bold"
+            }}
+          >
             {message}
           </p>
         )}
