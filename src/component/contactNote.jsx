@@ -1,159 +1,95 @@
 import React, { Component } from "react";
-
-class ContactNote extends Component {
+class ContactList extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      name: "",
-      lastname: "",
-      phone: "",
-      contacts: [],
-      message: "",
-      messageType: "",       // success | error
-      showContactId: null
-    };
+    this.state = { contacts: [], firstname: "", lastname: "", contactno: "" };
   }
-
-  handleChange = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  addContact = () => {
-    const { name, lastname, phone } = this.state;
-
-    if (name.trim() === "" || lastname.trim() === "" || phone.trim() === "") {
-      this.setState({
-        message: "❌ All fields are required!",
-        messageType: "error"
-      });
-
-      setTimeout(() => {
-        this.setState({ message: "" });
-      }, 2000);
-
+  addtocontact = () => {
+    if (
+      this.state.firstname.trim() == "" ||
+      this.state.lastname.trim() == "" ||
+      this.state.contactno.trim() == ""
+    )
       return;
-    }
-
-    const newContact = {
+    const newentry = {
       id: Date.now(),
-      name,
-      lastname,
-      phone
+      fname: this.state.firstname,
+      lname: this.state.lastname,
+      contact: this.state.contactno,
+      visible: false,
     };
-
     this.setState((prevState) => ({
-      contacts: [...prevState.contacts, newContact],
-      name: "",
+      contacts: [newentry, ...prevState.contacts],
+      firstname: "",
       lastname: "",
-      phone: "",
-      message: "✅ Contact added successfully!",
-      messageType: "success"
+      contactno: "",
     }));
-
-    setTimeout(() => {
-      this.setState({ message: "" });
-    }, 2000);
+  };
+  onfirstnamechange = (e) => {
+    this.setState({ firstname: e.target.value });
+  };
+  onlastnamechange = (e) => {
+    this.setState({ lastname: e.target.value });
+  };
+  oncontactnochange = (e) => {
+    this.setState({ contactno: e.target.value });
   };
 
-  deleteContact = (id) => {
+  deletecontact = (id) => {
     this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== id),
-      showContactId: null
+      contacts: prevState.contacts.filter((y) => y.id !== id),
     }));
   };
-
-  toggleView = (id) => {
+  updatecontact = (id) => {
     this.setState((prevState) => ({
-      showContactId: prevState.showContactId === id ? null : id
+      contacts: prevState.contacts.map((x) =>
+        x.id === id ? { ...x, visible: !x.visible } : x
+      ),
     }));
   };
-
   render() {
-    const {
-      name,
-      lastname,
-      phone,
-      contacts,
-      message,
-      messageType,
-      showContactId
-    } = this.state;
-
+    const { contacts, firstname, lastname, contactno } = this.state;
     return (
-      <div style={{ width: "400px", margin: "auto" }}>
-        <h2>📒 Contact Book</h2>
-
-        {message && (
-          <p
-            style={{
-              color: messageType === "error" ? "red" : "green",
-              fontWeight: "bold"
-            }}
-          >
-            {message}
-          </p>
-        )}
-
+      <>
         <input
           type="text"
-          name="name"
-          placeholder="Name"
-          value={name}
-          onChange={this.handleChange}
+          value={firstname}
+          onChange={this.onfirstnamechange}
         />
-        <br /><br />
-
+        <input type="text" value={lastname} onChange={this.onlastnamechange} />
         <input
           type="text"
-          name="lastname"
-          placeholder="Last Name"
-          value={lastname}
-          onChange={this.handleChange}
+          value={contactno}
+          onChange={this.oncontactnochange}
         />
-        <br /><br />
-
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          value={phone}
-          onChange={this.handleChange}
-        />
-        <br /><br />
-
-        <button onClick={this.addContact}>Add Contact</button>
-
-        <hr />
-
+        <br />
+        <button onClick={this.addtocontact}>Add</button>
+        <br />
         <ul>
-          {contacts.map((contact) => (
-            <li key={contact.id}>
-              <strong>{contact.name}</strong><br />
-
-              <button onClick={() => this.toggleView(contact.id)}>
-                {showContactId === contact.id ? "Hide" : "View"}
-              </button>
-
-              {showContactId === contact.id && (
-                <div>
-                  <p>Last Name: {contact.lastname}</p>
-                  <p>📞 Phone: {contact.phone}</p>
-                </div>
-              )}
-
-              <button onClick={() => this.deleteContact(contact.id)}>
-                Delete
-              </button>
-
-              <hr />
+          {contacts.map((x) => (
+            <li key={x.id}>
+              {x.fname}{" "}
+              <button
+                onClick={() => {
+                  this.updatecontact(x.id);
+                }}
+              >
+                View
+              </button>{" "}
+              <button onClick={() => this.deletecontact(x.id)}>Delete</button>
+              <div style={{ display: x.visible ? "" : "none" }}>
+                {x.lname} - {x.contact}
+              </div>
             </li>
           ))}
         </ul>
-      </div>
+      </>
     );
   }
 }
+export default ContactList;
 
-export default ContactNote;
+// 1. Create `src/ContactList.js`
+// 2. Import and use in `App.js`
+// 3. Add contacts, edit contact details, delete contacts
+// 4. Observe array state management with object updates
