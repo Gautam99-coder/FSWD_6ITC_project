@@ -10,6 +10,7 @@ import PropExample from './component/prop_example.jsx';
 import TodoList from './component/todolist.jsx';
 import UserCard1 from './component/usercardcomp.jsx';
 import Calculator1 from './sir/calc.jsx';
+import Page from './component/page.jsx';
 function App() {
   // const customfunction=()=>{
   //   console.log("Custom onClick executed.");
@@ -37,7 +38,8 @@ function App() {
     {/* <ContactManager/> */}
     {/* <BookList/> */}
     {/* <Calculator/> */}
-    <Calculator1/>
+    {/* <Calculator1/> */}
+    <Page/>
     </>
   );
 }
