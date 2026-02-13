@@ -11,6 +11,9 @@ import TodoList from './component/todolist.jsx';
 import UserCard1 from './component/usercardcomp.jsx';
 import Calculator1 from './sir/calc.jsx';
 import Page from './component/page.jsx';
+import HookExampple1 from './sir/count.jsx';
+import HookExample2 from './sir/hook2.jsx';
+import UserRecords from './excesises/ex1.jsx';
 function App() {
   // const customfunction=()=>{
   //   console.log("Custom onClick executed.");
@@ -39,7 +42,11 @@ function App() {
     {/* <BookList/> */}
     {/* <Calculator/> */}
     {/* <Calculator1/> */}
-    <Page/>
+    {/* <Page/> */}
+    {/* <HookExampple1/> */}
+    {/* <HookExample2/> */}
+        {/* <UserRecords/> */}
+        
     </>
   );
 }

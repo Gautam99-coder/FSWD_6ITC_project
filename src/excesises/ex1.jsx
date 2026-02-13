@@ -67,7 +67,7 @@ export default function HookExampl4() {
             <button onClick={() => deleteContact(x.id)}>Delete</button>
             <button onClick={()=>updateContact(x.id)}>Update</button>
             <div style={{ display: x.display ? "" : "none " }}>
-              {x.lname} {" --> "} {x.contact}
+              {x.lname} {" => "} {x.contact}
             </div>
           </li>
         ))}
